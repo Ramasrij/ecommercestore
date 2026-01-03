@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, Facebook, Github, Instagram, Linkedin, Mail, Twitter, Youtube } from "lucide-react";
 
 export const HeroSection = () => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-      {/* Background Pattern */}
       <div className="absolute inset-0 geometric-pattern opacity-50" />
-      
-      {/* Gradient Orb */}
+
+
       <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[120px] animate-pulse-glow" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl">
           <motion.div
@@ -29,8 +28,8 @@ export const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6"
           >
-           Discover Products{" "}
-             That <span className="text-gradient">Fit Your Life</span>
+            Discover Products{" "}
+            That <span className="text-gradient">Fit Your Life</span>
           </motion.h1>
 
           <motion.p
@@ -59,7 +58,7 @@ export const HeroSection = () => {
               href="#deals"
               className="inline-flex items-center gap-2 px-8 py-4 bg-secondary text-secondary-foreground font-semibold rounded-full hover:bg-secondary/80 transition-colors"
             >
-               View Deals
+              View Deals
             </a>
           </motion.div>
 
@@ -69,26 +68,44 @@ export const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex items-center gap-6"
           >
+
             <a
-              href="https://github.com"
+              href="https://Facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-card hover:bg-secondary transition-colors"
+              className="p-2 rounded-full hover:bg-secondary transition-colors"
             >
-              <Github className="w-6 h-6 text-foreground" />
+              <Facebook className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
             </a>
             <a
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-card hover:bg-secondary transition-colors"
+              className="p-2 rounded-full hover:bg-secondary transition-colors"
             >
-              <Linkedin className="w-6 h-6 text-foreground" />
+              <Linkedin className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+            </a>
+            <a
+              href="https://Instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full hover:bg-secondary transition-colors"
+            >
+              <Instagram className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full hover:bg-secondary transition-colors"
+              aria-label="Twitter"
+            >
+              <Twitter className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
             </a>
           </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

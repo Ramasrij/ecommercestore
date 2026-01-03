@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Clock, ArrowRight, Zap } from "lucide-react";
 import { useState, useEffect } from "react";
+// import { useRouter } from "next/router";
+
+import { useNavigate } from "react-router-dom";
+
 
 const deals = [
   {
@@ -77,6 +81,7 @@ const CountdownTimer = ({ endTime }: { endTime: Date }) => {
 };
 
 export const DealsSection = () => {
+   const navigate = useNavigate();
   return (
     <section id="deals" className="py-20 md:py-32">
       <div className="container mx-auto px-4 md:px-6">
@@ -142,10 +147,16 @@ export const DealsSection = () => {
                   </span>
                 </div>
 
-                <button className="w-full py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:opacity-90 transition-opacity">
-                  Grab This Deal
-                </button>
-              </div>
+          <button
+            className="w-full py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:opacity-90 transition-opacity"
+            //  onClick={() => navigate(`/checkout/${deal.id}`)}
+           onClick={() =>   navigate(
+    `/checkout/${deal.id}?price=${deal.salePrice}&original=${deal.originalPrice}`
+  )}
+            >
+            Grab This Deal
+          </button>
+          </div>
             </motion.div>
           ))}
         </div>

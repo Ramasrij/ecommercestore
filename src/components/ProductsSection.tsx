@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Heart, ShoppingBag, Star, Eye } from "lucide-react";
 import { useState } from "react";
+import { useWishlist } from "../context/WishlistContext";
+import { useCart } from "../context/CartContext";
+import { useToast } from "@/components/ui/use-toast";
+
 
 const products = [
   {
@@ -97,17 +101,15 @@ const categories = ["All", "Electronics", "Accessories", "Footwear", "Bags", "Cl
 
 export const ProductsSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [wishlist, setWishlist] = useState<number[]>([]);
-
+  // const [wishlist, setWishlist] = useState<number[]>([]);
+const { wishlist, toggleWishlist } = useWishlist();
   const filteredProducts = activeCategory === "All" 
     ? products 
     : products.filter(p => p.category === activeCategory);
+const { toast } = useToast();
 
-  const toggleWishlist = (id: number) => {
-    setWishlist(prev => 
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
-  };
+
+const { addToCart } = useCart();
 
   return (
     <section id="products" className="py-20 md:py-32">
@@ -151,9 +153,11 @@ export const ProductsSection = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+          
           {filteredProducts.map((product, index) => (
             <motion.div
               key={product.id}
+              id={`product-${product.id}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -177,7 +181,7 @@ export const ProductsSection = () => {
 
                 {/* Quick Actions */}
                 <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
+                  {/* <button
                     onClick={() => toggleWishlist(product.id)}
                     className={`p-2.5 rounded-full transition-colors ${
                       wishlist.includes(product.id)
@@ -186,20 +190,43 @@ export const ProductsSection = () => {
                     }`}
                   >
                     <Heart className="w-4 h-4" fill={wishlist.includes(product.id) ? "currentColor" : "none"} />
-                  </button>
+                  </button> */}
+<button
+  onClick={() => toggleWishlist(product)}
+  className={`p-2.5 rounded-full transition-colors ${
+    wishlist.some(p => p.id === product.id)
+      ? "bg-primary text-primary-foreground"
+      : "bg-card hover:bg-primary hover:text-primary-foreground"
+  }`}
+>
+  <Heart
+    className="w-4 h-4"
+    fill={wishlist.some(p => p.id === product.id) ? "currentColor" : "none"}
+  />
+</button>
+
+
                   <button className="p-2.5 rounded-full bg-card hover:bg-primary hover:text-primary-foreground transition-colors">
                     <Eye className="w-4 h-4" />
                   </button>
                 </div>
+<button
+  onClick={() => {
+    addToCart(product);
+    toast({
+      title: "Added to cart",
+      description:
+        "Product added successfully. You can view it in your cart anytime.",
+    });
+  }}
+  className="absolute bottom-4 left-4 right-4 py-3 bg-foreground text-background rounded-xl font-semibold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all flex items-center justify-center gap-2"
+>
+  <ShoppingBag className="w-4 h-4" />
+  Add to Cart
+</button>
 
-                {/* Add to Cart Button */}
-                <button className="absolute bottom-4 left-4 right-4 py-3 bg-foreground text-background rounded-xl font-semibold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all flex items-center justify-center gap-2">
-                  <ShoppingBag className="w-4 h-4" />
-                  Add to Cart
-                </button>
               </div>
 
-              {/* Product Info */}
               <div className="p-5 space-y-3">
                 <p className="text-sm text-muted-foreground">{product.category}</p>
                 <h3 className="font-semibold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
